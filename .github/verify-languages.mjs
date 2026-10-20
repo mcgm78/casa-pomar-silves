@@ -33,7 +33,8 @@ for (const [language,[htmlLanguage,file,suffix]] of Object.entries(versions)) {
   assert.equal(json.offers.itemOffered.numberOfBedrooms,6);
   const ids=[...page.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
   assert.equal(ids.length,new Set(ids).size);
-  for (const [,url] of page.matchAll(/\b(?:href|src)="([^"]+)"/g)) {
+  for (const [,rawUrl] of page.matchAll(/\b(?:href|src)="([^"]+)"/g)) {
+    const url=rawUrl.split('?')[0];
     if (/^(https?:|data:|tel:|mailto:)/.test(url)) continue;
     if(url.startsWith('#')) assert(ids.includes(url.slice(1)),`Broken ${language} anchor ${url}`);
     else assert(fs.existsSync(path.join(root,url)),`Missing ${language} asset ${url}`);

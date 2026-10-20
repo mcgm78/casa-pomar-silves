@@ -14,7 +14,7 @@ const tour = context.window.HOUSE_TOUR;
 const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]);
 assert.equal(ids.length,new Set(ids).size,'HTML ids must be unique');
 for (const match of html.matchAll(/\b(?:href|src)="([^"]+)"/g)) {
-  const url = match[1];
+  const url = match[1].split('?')[0];
   if (/^(https?:|data:|tel:|mailto:)/.test(url)) continue;
   if (url.startsWith('#')) assert(ids.includes(url.slice(1)),`Unknown anchor ${url}`);
   else assert(fs.existsSync(path.join(dist,url)),`Missing resource ${url}`);
