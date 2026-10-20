@@ -14,6 +14,15 @@
   let lastFocused = null;
   let toastTimer;
 
+  // Discourage casual saving without interfering with gallery navigation.
+  const protectedPhoto = target => target instanceof Element &&
+    target.closest('img[src^="images/"], [data-photo], .lightbox-stage');
+  ['contextmenu', 'dragstart'].forEach(type => {
+    document.addEventListener(type, event => {
+      if (protectedPhoto(event.target)) event.preventDefault();
+    });
+  });
+
   const whatsappUrl = message => `https://wa.me/${config.whatsappNumber}?text=${encodeURIComponent(message)}`;
   const defaultMessage = 'Olá! Tenho interesse na moradia T6 em Poço Barreto, Silves, anunciada por 780 000 €. Gostaria de receber mais informações.';
   document.querySelectorAll('[data-whatsapp]').forEach(link => {
@@ -92,13 +101,10 @@
 
   function updateLightbox() {
     const photo = photos[currentIndex];
-    largeImage.src = `images/original/${photo.file}.jpg`;
+    largeImage.src = `images/large/${photo.file}.webp`;
     largeImage.alt = photo.alt;
     document.getElementById('lightbox-count').textContent = `${currentIndex + 1} / ${photos.length}`;
     document.getElementById('lightbox-caption').textContent = photo.alt;
-    const download = document.getElementById('photo-download');
-    download.href = `images/original/${photo.file}.jpg`;
-    download.download = `Casa_Silves_${photo.file}.jpg`;
     document.getElementById('ask-about-photo').href = whatsappUrl(`Olá! Gostaria de saber mais sobre a fotografia ${photo.file} (${photo.alt.toLowerCase()}) da moradia T6 em Poço Barreto, Silves.`);
     thumbStrip.querySelectorAll('button').forEach(button => {
       const selected = Number(button.dataset.photo) === photo.id;

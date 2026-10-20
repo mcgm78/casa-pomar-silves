@@ -37,6 +37,8 @@ jobs:
           touch _site/.nojekyll
       - name: Verificar fotografias, visita virtual e contactos
         run: node .github/verify-site.mjs _site
+      - name: Publicar apenas as versões otimizadas das fotografias
+        run: rm -rf _site/images/original
       - name: Configurar o GitHub Pages
         uses: actions/configure-pages@v5
       - name: Preparar os ficheiros para publicação

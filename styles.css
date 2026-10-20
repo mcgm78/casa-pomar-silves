@@ -15,3 +15,6 @@
 .contact-caption [data-contact-name]{display:block;color:var(--ink);font-size:12px;font-weight:600;margin-top:4px}.card-telephone{display:block;text-align:center;font-size:10px;color:var(--muted);margin-top:8px}.card-telephone:hover{color:var(--ink)}.contact-copy .contact-name{font-size:18px!important;color:#eef4e5!important;margin:4px 0 8px}.telephone-link{display:flex;align-items:center;gap:12px;width:max-content;max-width:100%;padding:8px 0;color:#c3d4be;font-size:10px}.telephone-link .icon{width:18px;height:18px}.telephone-link strong{display:block;font-size:15px;font-weight:400;color:#f0f4e7}.telephone-link:hover strong{text-decoration:underline}
 [hidden]{display:none!important}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}.btn:hover{transform:none}}
+
+/* Discourage dragging and long-press saving of property photographs. */
+.hero-gallery img,.gallery-item img,#lightbox-image,.lightbox-thumbs img,.tour-frame img{-webkit-user-drag:none;-webkit-touch-callout:none;user-select:none}
