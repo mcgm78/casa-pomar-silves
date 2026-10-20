@@ -1,0 +1,49 @@
+name: Publicar Casa Pomar no GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obter os ficheiros
+        uses: actions/checkout@v4
+      - name: Preparar o site e todas as imagens
+        run: |
+          sha256sum --check media.sha256
+          mkdir _site
+          cp index.html styles.css property.js app.js tour.js tour-data.js favicon.svg _site/
+          python3 - <<'PYTHON'
+          import glob, zipfile
+          for archive in sorted(glob.glob('media-*.zip')):
+              with zipfile.ZipFile(archive) as package:
+                  package.extractall('_site')
+          PYTHON
+          touch _site/.nojekyll
+      - name: Verificar fotografias, visita virtual e contactos
+        run: node .github/verify-site.mjs _site
+      - name: Configurar o GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Preparar os ficheiros para publicação
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+          include-hidden-files: true
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
