@@ -28,7 +28,7 @@ assert.equal(new Set(property.photos.map(photo=>photo.id)).size,50);
 assert.equal(property.whatsappNumber,'491727134094');
 assert.equal(property.telephoneNumber,'351919825799');
 assert.equal(property.email,'jmiranda@t-online.de');
-assert.equal(property.price,550000);
+assert.equal(property.price,780000);
 assert.equal(property.contactName,'Julio Miranda');
 const whatsappLinks = [...html.matchAll(/href="https:\/\/wa\.me\/(\d+)"/g)].map(match => match[1]);
 assert(whatsappLinks.length >= 7);

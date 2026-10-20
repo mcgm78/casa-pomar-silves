@@ -15,7 +15,7 @@
   let toastTimer;
 
   const whatsappUrl = message => `https://wa.me/${config.whatsappNumber}?text=${encodeURIComponent(message)}`;
-  const defaultMessage = 'Olá! Tenho interesse na moradia T6 em Poço Barreto, Silves, anunciada por 550 000 €. Gostaria de receber mais informações.';
+  const defaultMessage = 'Olá! Tenho interesse na moradia T6 em Poço Barreto, Silves, anunciada por 780 000 €. Gostaria de receber mais informações.';
   document.querySelectorAll('[data-whatsapp]').forEach(link => {
     link.href = whatsappUrl(link.dataset.intent || defaultMessage);
   });
@@ -159,7 +159,7 @@
   document.getElementById('share-property').addEventListener('click', async () => {
     const url = config.siteUrl + '/';
     if (navigator.share) {
-      try { await navigator.share({title:'Moradia T6 em Silves · Casa do Pomar',text:'550 000 € · 6 quartos · terreno de 12 240 m²',url}); return; }
+      try { await navigator.share({title:'Moradia T6 em Silves · Casa do Pomar',text:'780 000 € · 6 quartos · terreno de 12 240 m²',url}); return; }
       catch (error) { if (error.name === 'AbortError') return; }
     }
     try { await navigator.clipboard.writeText(url); toast('Ligação copiada. Pode partilhá-la.'); }
@@ -170,7 +170,7 @@
     const name = document.getElementById('visitor-name').value.trim();
     const interest = document.getElementById('visitor-interest').value;
     const message = document.getElementById('visitor-message').value.trim();
-    const text = [`Olá!${name ? ` O meu nome é ${name}.` : ''}`,`${interest} sobre a moradia T6 em Poço Barreto, Silves (550 000 €).`,message].filter(Boolean).join('\n\n');
+    const text = [`Olá!${name ? ` O meu nome é ${name}.` : ''}`,`${interest} sobre a moradia T6 em Poço Barreto, Silves (780 000 €).`,message].filter(Boolean).join('\n\n');
     window.open(whatsappUrl(text), '_blank', 'noopener,noreferrer');
   });
 

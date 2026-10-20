@@ -6,7 +6,7 @@ window.PROPERTY_CONFIG = {
   telephoneNumber: '351919825799',
   telephoneDisplay: '+351 919 825 799',
   email: 'jmiranda@t-online.de',
-  price: 550000,
+  price: 780000,
   siteUrl: 'https://mcgm78.github.io/casa-pomar-silves',
   latitude: 37.16939654107869,
   longitude: -8.38419639275983,
