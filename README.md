@@ -4,6 +4,12 @@ Página da moradia T6 à venda em Poço Barreto, Silves, com 50 fotografias e vi
 
 **Visitar o site:** https://mcgm78.github.io/casa-pomar-silves/
 
+## Idiomas
+
+O seletor no topo liga as versões portuguesa, inglesa (`en.html`), alemã (`de.html`) e francesa (`fr.html`). Cada página tem o seu endereço canónico, alternativas `hreflang` e conteúdo traduzido, incluindo as fotografias, a visita virtual e as mensagens de WhatsApp.
+
+Editar o conteúdo português em `index.html` e as traduções em `translations.tsv`. Executar `python3 .github/build-languages.py` para atualizar as páginas, `i18n.js` e o mapa do site. O fluxo de publicação também executa esse passo e verifica as quatro versões automaticamente. O processo usa apenas Python e Node.js, sem dependências adicionais.
+
 ## Contactos
 
 - Julio Miranda

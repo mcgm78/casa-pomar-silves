@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const tour = window.HOUSE_TOUR;
+  const t = window.HOUSE_I18N.t;
   if (!tour || !window.pannellum) return;
   const select = document.getElementById('tour-room-select');
   const list = document.getElementById('tour-room-list');
@@ -22,7 +23,7 @@
     select.append(option);
     const button = document.createElement('button');
     button.dataset.scene = id;
-    button.setAttribute('aria-label', `Visitar: ${scene.title}`);
+    button.setAttribute('aria-label', t('Visitar: {title}',{title:scene.title}));
     const image = document.createElement('img');
     image.src = scene.preview;
     image.alt = scene.title;
@@ -64,15 +65,15 @@
     try { viewer?.stopAutoRotate(); } catch {}
     start.hidden = true;
     fallback.hidden = false;
-    document.getElementById('tour-mode-label').textContent = 'EXPLORAR AS DIVISÕES · MODO FOTOGRAFIA';
-    status.textContent = 'Escolha uma divisão no menu ou nas miniaturas.';
+    document.getElementById('tour-mode-label').textContent = t('EXPLORAR AS DIVISÕES · MODO FOTOGRAFIA');
+    status.textContent = t('Escolha uma divisão no menu ou nas miniaturas.');
     updateScene(activeScene);
   }
 
   function startTour(id = activeScene) {
     activeScene = id;
     start.hidden = true;
-    status.textContent = 'A preparar a visita virtual…';
+    status.textContent = t('A preparar a visita virtual…');
     fullscreen.disabled = !document.getElementById('tour-frame').requestFullscreen;
     try {
       viewer = window.pannellum.viewer('panorama-viewer', {
@@ -88,22 +89,22 @@
           escapeHTML:true,
           orientationOnByDefault:false,
           strings:{
-            loadButtonLabel:'Entrar na visita 360°',
-            loadingLabel:'A carregar panorama…',
+            loadButtonLabel:t('Entrar na visita 360°'),
+            loadingLabel:t('A carregar panorama…'),
             bylineLabel:'',
-            noPanoramaError:'Não foi possível abrir este panorama.',
-            fileAccessError:'Não foi possível carregar a imagem.',
-            malformedURLError:'A imagem do panorama não está disponível.',
-            iOS8WebGLError:'O modo 360° não está disponível neste dispositivo.',
-            genericWebGLError:'O modo 360° não está disponível neste dispositivo.',
-            textureSizeError:'Este dispositivo não permite abrir o panorama em 360°.',
-            unknownError:'Não foi possível iniciar o modo 360°.'
+            noPanoramaError:t('Não foi possível abrir este panorama.'),
+            fileAccessError:t('Não foi possível carregar a imagem.'),
+            malformedURLError:t('A imagem do panorama não está disponível.'),
+            iOS8WebGLError:t('O modo 360° não está disponível neste dispositivo.'),
+            genericWebGLError:t('O modo 360° não está disponível neste dispositivo.'),
+            textureSizeError:t('Este dispositivo não permite abrir o panorama em 360°.'),
+            unknownError:t('Não foi possível iniciar o modo 360°.')
           }
         },
         scenes:tour.scenes
       });
-      viewer.on('scenechange', id => { updateScene(id); status.textContent = 'Arraste para olhar à volta. Use as setas para passar para a próxima divisão.'; });
-      viewer.on('load', () => { rotate.disabled = photoMode; status.textContent = 'Arraste para olhar à volta. Use as setas para mudar de divisão.'; });
+      viewer.on('scenechange', id => { updateScene(id); status.textContent = t('Arraste para olhar à volta. Use as setas para passar para a próxima divisão.'); });
+      viewer.on('load', () => { rotate.disabled = photoMode; status.textContent = t('Arraste para olhar à volta. Use as setas para mudar de divisão.'); });
       viewer.on('error', fallbackMode);
       updateScene(id);
     } catch { fallbackMode(); }
@@ -127,19 +128,19 @@
     rotating = !rotating;
     if (rotating) viewer.startAutoRotate(-2); else viewer.stopAutoRotate();
     rotate.setAttribute('aria-pressed',String(rotating));
-    rotate.setAttribute('aria-label',rotating ? 'Parar rotação automática' : 'Ativar rotação automática');
+    rotate.setAttribute('aria-label',t(rotating ? 'Parar rotação automática' : 'Ativar rotação automática'));
   });
   fullscreen.addEventListener('click', async () => {
     const frame = document.getElementById('tour-frame');
     try {
       if (document.fullscreenElement) await document.exitFullscreen();
       else await frame.requestFullscreen();
-    } catch { status.textContent = 'O ecrã inteiro não está disponível neste navegador.'; }
+    } catch { status.textContent = t('O ecrã inteiro não está disponível neste navegador.'); }
     viewer?.resize();
   });
   document.addEventListener('fullscreenchange', () => {
     viewer?.resize();
-    fullscreen.setAttribute('aria-label',document.fullscreenElement ? 'Sair do ecrã inteiro' : 'Abrir visita virtual em ecrã inteiro');
+    fullscreen.setAttribute('aria-label',t(document.fullscreenElement ? 'Sair do ecrã inteiro' : 'Abrir visita virtual em ecrã inteiro'));
   });
   updateScene(activeScene);
 })();

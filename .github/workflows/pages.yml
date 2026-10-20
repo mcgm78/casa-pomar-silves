@@ -23,11 +23,13 @@ jobs:
     steps:
       - name: Obter os ficheiros
         uses: actions/checkout@v4
+      - name: Gerar português, inglês, alemão e francês
+        run: python3 .github/build-languages.py
       - name: Preparar o site e todas as imagens
         run: |
           sha256sum --check media.sha256
           mkdir _site
-          cp index.html styles.css property.js app.js tour.js tour-data.js favicon.svg sitemap.xml _site/
+          cp index.html en.html de.html fr.html styles.css property.js i18n.js app.js tour.js tour-data.js favicon.svg sitemap.xml _site/
           python3 - <<'PYTHON'
           import glob, zipfile
           for archive in sorted(glob.glob('media-*.zip')):
@@ -36,7 +38,9 @@ jobs:
           PYTHON
           touch _site/.nojekyll
       - name: Verificar fotografias, visita virtual e contactos
-        run: node .github/verify-site.mjs _site
+        run: |
+          node .github/verify-site.mjs _site
+          node .github/verify-languages.mjs _site
       - name: Publicar apenas as versões otimizadas das fotografias
         run: rm -rf _site/images/original
       - name: Configurar o GitHub Pages
