@@ -27,7 +27,7 @@ jobs:
         run: |
           sha256sum --check media.sha256
           mkdir _site
-          cp index.html styles.css property.js app.js tour.js tour-data.js favicon.svg _site/
+          cp index.html styles.css property.js app.js tour.js tour-data.js favicon.svg sitemap.xml _site/
           python3 - <<'PYTHON'
           import glob, zipfile
           for archive in sorted(glob.glob('media-*.zip')):
